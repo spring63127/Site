@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中國互聯網戰略格局全解析 - 賽博視角</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10/dist/framer-motion.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --neon-cyan: hsl(180, 100%, 50%);
+            --neon-magenta: hsl(300, 100%, 60%);
+            --neon-lime: hsl(90, 100%, 50%);
+            --neon-yellow: hsl(60, 100%, 50%);
+            --bg-dark: #0a0f1f;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0a0;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-light); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
+        .cyber-glow-border { border: 1px solid hsla(180, 100%, 50%, 0.5); box-shadow: 0 0 5px hsla(180, 100%, 50%, 0.5), 0 0 10px hsla(180, 100%, 50%, 0.5), 0 0 15px hsla(180, 100%, 50%, 0.3), inset 0 0 5px hsla(180, 100%, 50%, 0.5); position: relative; }
+        .cyber-glow-border-magenta { border: 1px solid hsla(300, 100%, 60%, 0.5); box-shadow: 0 0 5px hsla(300, 100%, 60%, 0.5), 0 0 10px hsla(300, 100%, 60%, 0.5), 0 0 15px hsla(300, 100%, 60%, 0.3), inset 0 0 5px hsla(300, 100%, 60%, 0.5); }
+        .cyber-glow-border-lime { border: 1px solid hsla(90, 100%, 50%, 0.5); box-shadow: 0 0 5px hsla(90, 100%, 50%, 0.5), 0 0 10px hsla(90, 100%, 50%, 0.5), 0 0 15px hsla(90, 100%, 50%, 0.3), inset 0 0 5px hsla(90, 100%, 50%, 0.5); }
+        .cyber-glow-border-yellow { border: 1px solid hsla(60, 100%, 50%, 0.5); box-shadow: 0 0 5px hsla(60, 100%, 50%, 0.5), 0 0 10px hsla(60, 100%, 50%, 0.5), 0 0 15px hsla(60, 100%, 50%, 0.3), inset 0 0 5px hsla(60, 100%, 50%, 0.5); }
+        .bento-item { background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 1.5rem; border-radius: 0.75rem; transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; display: flex; flex-direction: column; }
+        .bento-item:hover { transform: translateY(-5px); }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; }
+        h1 { text-shadow: 0 0 8px var(--neon-cyan), 0 0 12px var(--neon-cyan); }
+        h2 { color: var(--neon-cyan); text-shadow: 0 0 5px hsla(180, 100%, 50%, 0.7); }
+        h3 { color: var(--neon-magenta); text-shadow: 0 0 5px hsla(300, 100%, 60%, 0.7); }
+        .text-highlight-cyan { color: var(--neon-cyan); }
+        .text-highlight-magenta { color: var(--neon-magenta); }
+        .text-highlight-lime { color: var(--neon-lime); }
+        .text-highlight-yellow { color: var(--neon-yellow); }
+        .text-justify-custom { text-align: justify; text-justify: inter-word; hyphens: auto; }
+        .data-stat-group { margin-bottom: 0.75rem; }
+        .data-stat { font-size: 1.875rem; font-weight: 700; font-family: 'Orbitron', sans-serif; display: block; }
+        .data-label { font-size: 0.8rem; color: var(--text-dim); display: block; line-height: 1.2; }
+        .stat-comparison { display: flex; align-items: baseline; gap: 0.5rem; }
+        .stat-arrow { font-size: 1.2rem; margin: 0 0.25rem; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+        th, td { border: 1px solid hsla(180, 100%, 50%, 0.3); padding: 0.75rem; text-align: left; font-size: 0.9rem; }
+        th { background-color: hsla(180, 100%, 50%, 0.1); color: var(--neon-cyan); font-weight: 600; }
+        .line-art-icon { font-size: 1.8rem; margin-bottom: 0.5rem; line-height: 1; }
+        .bg-gradient-cyber-blue { background: linear-gradient(135deg, hsla(180, 100%, 50%, 0.05) 0%, hsla(225, 30%, 10%, 0.2) 100%); }
+        .bg-gradient-cyber-magenta { background: linear-gradient(135deg, hsla(300, 100%, 60%, 0.05) 0%, hsla(225, 30%, 10%, 0.2) 100%); }
+        .motion-block > div { height: 100%; }
+        .chart-container { position: relative; height: 250px; margin-top: 1rem; width:100%; }
+        #language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 12px;
+            background-color: var(--neon-cyan);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+        #language-toggle:hover {
+            background-color: hsl(180, 100%, 60%);
+        }
+    </style>
+    <script>
+        tailwind.config = { /* Tailwind config remains the same */ };
+        const neonCyanRGB = '0, 255, 255'; const neonMagentaRGB = '255, 0, 255'; const neonLimeRGB = '57, 255, 20'; const neonYellowRGB = '255, 255, 0'; const bgDarkRGB = '10, 15, 31'; const textLightRGB = '224, 224, 224';
+    </script>
+</head>
+<body class="antialiased">
+    <button id="language-toggle" data-lang="zh">ENG</button>
+
+    <div class="container mx-auto px-4 py-8 md:py-16">
+
+        <header class="text-center mb-16 md:mb-24 motion-block">
+            <div data-motion-initial='{ "opacity": 0, "y": -50 }' data-motion-whileInView='{ "opacity": 1, "y": 0 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-highlight-cyan" data-translate="pageTitle">中國互聯網戰略格局全解析</h1>
+                <p class="text-lg md:text-xl text-text-dim font-orbitron" data-translate="pageSubtitle">三把劍與商業演進：賽博視角</p>
+            </div>
+        </header>
+
+        <!-- Section I: 三把劍 -->
+        <section class="mb-16 md:mb-24 motion-block">
+            <div data-motion-initial='{ "opacity": 0, "y": 50 }' data-motion-whileInView='{ "opacity": 1, "y": 0 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.2 }'>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-2 text-center" data-translate="section1_title">一、何謂「三把劍」？</h2>
+                <h3 class="text-xl md:text-2xl font-medium mb-8 text-highlight-magenta text-center" data-translate="section1_subtitle">字節跳動創始人張一鳴的全局思維</h3>
+                <p class="text-base md:text-lg text-justify-custom mb-8 text-text-dim" data-translate="section1_p1">在中國互聯網產業中，「內容、社交、電商」被稱為影響流量和變現能力的三把戰略之劍。掌握這三劍的能力，決定了企業是否能持續成長並在賽道中佔據主導地位。字節跳動創始人兼前CEO張一鳴（技術出身，擅長算法與產品戰略）正是這一戰略最具代表性的實踐者。他透過佈局今日頭條、抖音、興趣電商，全面建構內容、社交與交易閉環。</p>
+                
+                <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                    <div class="bento-item cyber-glow-border-lime motion-block">
+                        <div data-motion-initial='{ "opacity": 0, "scale": 0.8 }' data-motion-whileInView='{ "opacity": 1, "scale": 1 }' data-motion-transition='{ "duration": 0.5, "delay": 0.2, "ease": "backOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }' class="flex flex-col h-full">
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-lime" data-translate="section1_sword1_title"><i class="fas fa-newspaper fa-fw mr-3 line-art-icon"></i>內容劍：流量之源</h4>
+                            <p class="text-sm text-justify-custom text-text-dim mb-4 grow" data-translate="section1_sword1_p1">今日頭條於2012年上線，以算法分發為核心。2017年，抖音迅速席捲全國。抖音的日活躍用戶從2018年的2億增長至2023年的超過8億。廣告收入亦從2016年的約80億元增長至2023年的逾3000億元。</p>
+                            <div class="mt-auto pt-4 border-t border-neon-lime-dim">
+                                <div class="data-stat-group">
+                                    <span class="data-label" data-translate="section1_sword1_stat1_label">抖音日活躍用戶 (DAU)</span>
+                                    <div class="stat-comparison">
+                                        <span class="data-stat text-highlight-lime">2億</span> <span class="text-text-dim text-xs" data-translate="section1_sword1_stat1_year1">(2018)</span>
+                                        <i class="fas fa-long-arrow-alt-right stat-arrow text-highlight-lime"></i>
+                                        <span class="data-stat text-highlight-lime">8億+</span> <span class="text-text-dim text-xs" data-translate="section1_sword1_stat1_year2">(2023)</span>
+                                    </div>
+                                </div>
+                                <div class="data-stat-group">
+                                     <span class="data-label" data-translate="section1_sword1_stat2_label">廣告收入 (人民幣)</span>
+                                     <div class="stat-comparison">
+                                        <span class="data-stat text-highlight-lime">80億</span> <span class="text-text-dim text-xs" data-translate="section1_sword1_stat2_year1">(2016)</span>
+                                        <i class="fas fa-long-arrow-alt-right stat-arrow text-highlight-lime"></i>
+                                        <span class="data-stat text-highlight-lime">3000億+</span> <span class="text-text-dim text-xs" data-translate="section1_sword1_stat2_year2">(2023)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bento-item cyber-glow-border-yellow motion-block">
+                        <div data-motion-initial='{ "opacity": 0, "scale": 0.8 }' data-motion-whileInView='{ "opacity": 1, "scale": 1 }' data-motion-transition='{ "duration": 0.5, "delay": 0.4, "ease": "backOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }' class="flex flex-col h-full">
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-yellow" data-translate="section1_sword2_title"><i class="fas fa-users fa-fw mr-3 line-art-icon"></i>社交劍：挑戰騰訊帝國</h4>
+                            <p class="text-sm text-justify-custom text-text-dim mb-4 grow" data-translate="section1_sword2_p1">儘管字節跳動旗下「多閃」、「飛聊」社交產品未能成功挑戰微信，但抖音透過多種方式嵌入社交功能。微信（月活12.6億）仍然主導市場，但抖音日均互動量在年輕用戶群體中佔比持續上升。</p>
+                             <div class="mt-auto pt-4 border-t border-neon-yellow-dim">
+                                <div class="data-stat-group">
+                                    <span class="data-label" data-translate="section1_sword2_stat1_label">微信月活躍用戶 (MAU)</span>
+                                    <span class="data-stat text-highlight-yellow">12.6 億</span>
+                                </div>
+                                <div class="data-stat-group">
+                                    <span class="data-label" data-translate="section1_sword2_stat2_label">抖音日均互動量 (年輕用戶)</span>
+                                    <span class="data-stat text-highlight-yellow flex items-center" data-translate="section1_sword2_stat2_value">持續上升 <i class="fas fa-arrow-trend-up ml-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bento-item cyber-glow-border-magenta motion-block">
+                         <div data-motion-initial='{ "opacity": 0, "scale": 0.8 }' data-motion-whileInView='{ "opacity": 1, "scale": 1 }' data-motion-transition='{ "duration": 0.5, "delay": 0.6, "ease": "backOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }' class="flex flex-col h-full">
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-magenta" data-translate="section1_sword3_title"><i class="fas fa-shopping-cart fa-fw mr-3 line-art-icon"></i>電商劍：打造內容到交易閉環</h4>
+                            <p class="text-sm text-justify-custom text-text-dim mb-4 grow" data-translate="section1_sword3_p1">字節跳動於2020年正式推出「興趣電商」戰略，透過達人直播（如羅永浩）與品牌自播（如雷軍）推動轉化。抖音電商GMV（成交總額）增長迅猛。</p>
+                            <div class="mt-auto pt-4 border-t border-neon-magenta-dim">
+                                <div class="chart-container" style="height: 150px;"><canvas id="douyinGMVChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section II: 傳統三巨頭的反擊與十年財務對比 -->
+        <section class="mb-16 md:mb-24 motion-block">
+            <div data-motion-initial='{ "opacity": 0, "x": -100 }' data-motion-whileInView='{ "opacity": 1, "x": 0 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.2 }'>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-8 text-center" data-translate="section2_title">二、傳統三巨頭的反擊與十年財務對比</h2>
+                <p class="text-base md:text-lg text-justify-custom mb-6 text-text-dim" data-translate="section2_p1">面對張一鳴的三劍佈局，中國傳統三大科技企業也紛紛調整策略、重構護城河。關鍵人物包括阿里巴巴創始人馬雲、騰訊創始人馬化騰、字節跳動創始人張一鳴。</p>
+                
+                <div class="overflow-x-auto cyber-glow-border-magenta rounded-lg p-0.5 mb-10">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th data-translate="table1_col1">公司</th>
+                                <th data-translate="table1_col2">核心強項</th>
+                                <th data-translate="table1_col3">短板</th>
+                                <th data-translate="table1_col4">戰略應對</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-highlight-yellow">阿里巴巴</td>
+                                <td data-translate="table1_r1c2">電商體系完整</td>
+                                <td data-translate="table1_r1c3">年輕用戶流失，內容生態薄弱</td>
+                                <td data-translate="table1_r1c4">加強淘寶直播、建構AI種草閉環</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-highlight-lime">騰訊</td>
+                                <td data-translate="table1_r2c2">社交基因強大</td>
+                                <td data-translate="table1_r2c3">電商鏈條斷裂，缺乏交易場景</td>
+                                <td data-translate="table1_r2c4">推動微信小商店＋影片號內容電商</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-highlight-cyan">字節跳動</td>
+                                <td data-translate="table1_r3c2">內容驅動流量，算法投放精準</td>
+                                <td data-translate="table1_r3c3">社交工具生態尚未形成閉環</td>
+                                <td data-translate="table1_r3c4">持續拓展社交與SaaS服務體系（如飛書）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-xl md:text-2xl font-medium mb-4 text-highlight-magenta text-center" data-translate="section2_subtitle_financial">財務對比（2013–2023）摘要</h3>
+                 <div class="overflow-x-auto cyber-glow-border-lime rounded-lg p-0.5 mb-8">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th data-translate="table2_col1">年度</th>
+                                <th data-translate="table2_col2">阿里巴巴收入</th>
+                                <th data-translate="table2_col3">騰訊收入</th>
+                                <th data-translate="table2_col4">字節跳動收入</th>
+                                <th data-translate="table2_col5">字節跳動是否盈利</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2013年</td><td>$52億</td><td>$98億</td><td>&lt; $5億</td><td class="text-red-400" data-translate="table2_r1c5_profit">否</td></tr>
+                            <tr><td>2018年</td><td>$561億</td><td>$472億</td><td>$120億</td><td class="text-red-400" data-translate="table2_r2c5_profit">否</td></tr>
+                            <tr><td>2022年</td><td>$1260億</td><td>$820億</td><td>$800億</td><td class="text-green-400" data-translate="table2_r3c5_profit">是 (利潤超騰訊)</td></tr>
+                            <tr><td>2023年</td><td class="text-highlight-yellow">預估 $1380億</td><td class="text-highlight-lime">$850億</td><td class="text-highlight-cyan">預估 $950億</td><td class="text-green-400" data-translate="table2_r4c5_profit">是</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-2 mb-6 text-center text-base md:text-lg text-highlight-cyan font-semibold" data-translate="section2_p2_financial_summary">字節跳動2022年首次實現大規模盈利（淨利潤172億美元），盈利能力強勁增長。</p>
+                
+                <div class="bento-item cyber-glow-border p-4 md:p-6">
+                    <h4 class="text-xl font-semibold mb-4 text-center text-highlight-cyan" data-translate="section2_chart1_title">三巨頭收入對比圖 (2013-2023, 單位: 十億美元)</h4>
+                    <div class="chart-container" style="height: 350px;"><canvas id="financialComparisonChart"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section III: 電商模式變遷 -->
+        <section class="mb-16 md:mb-24 motion-block">
+             <div data-motion-initial='{ "opacity": 0, "x": 100 }' data-motion-whileInView='{ "opacity": 1, "x": 0 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.2 }'>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-8 text-center" data-translate="section3_title">三、電商模式變遷：從1.0到6.0</h2>
+                <p class="text-base md:text-lg text-justify-custom mb-6 text-text-dim" data-translate="section3_p1">中國電商過去十年從平台購物走向內容驅動與社交推薦，模式演進如下：</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="bento-item cyber-glow-border-lime bg-gradient-cyber-blue">
+                        <h4 class="text-lg font-semibold mb-2 text-highlight-lime" data-translate="section3_item1_title"><i class="fas fa-layer-group fa-fw mr-2"></i>電商1.0 (貨架電商)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section3_item1_desc">用戶主動搜索商品，以SKU為核心，代表如淘寶初期階段。</p>
+                    </div>
+                    <div class="bento-item cyber-glow-border-lime bg-gradient-cyber-blue">
+                        <h4 class="text-lg font-semibold mb-2 text-highlight-lime" data-translate="section3_item2_title"><i class="fas fa-store fa-fw mr-2"></i>電商2.0 (平台電商)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section3_item2_desc">商家入駐平台，形成「店中店」，如京東早期模式。</p>
+                    </div>
+                    <div class="bento-item cyber-glow-border-lime bg-gradient-cyber-blue">
+                        <h4 class="text-lg font-semibold mb-2 text-highlight-lime" data-translate="section3_item3_title"><i class="fas fa-mobile-alt fa-fw mr-2"></i>電商3.0 (移動電商)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section3_item3_desc">手機購物成為主流，App生態爆發。</p>
+                    </div>
+                    <div class="bento-item cyber-glow-border-yellow bg-gradient-cyber-blue">
+                        <h4 class="text-lg font-semibold mb-2 text-highlight-yellow" data-translate="section3_item4_title"><i class="fas fa-users fa-fw mr-2"></i>電商4.0 (拼購電商)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section3_item4_desc">以拼多多為代表，依靠社交拼團模式主打「低價」與「爆款」。</p>
+                    </div>
+                    <div class="bento-item cyber-glow-border-yellow bg-gradient-cyber-blue">
+                        <h4 class="text-lg font-semibold mb-2 text-highlight-yellow" data-translate="section3_item5_title"><i class="fas fa-video fa-fw mr-2"></i>電商5.0 (興趣電商)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section3_item5_desc">內容驅動消費，如抖音影片引導購買，強調「逛」的體驗。</p>
+                    </div>
+                    <div class="bento-item cyber-glow-border-yellow bg-gradient-cyber-blue">
+                        <h4 class="text-lg font-semibold mb-2 text-highlight-yellow" data-translate="section3_item6_title"><i class="fas fa-gift fa-fw mr-2"></i>電商6.0 (人情電商)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section3_item6_desc">強調熟人推薦、私域流量，微信「送禮」、「社群買手」構成典型案例。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section IV: 電商終局与零售三种路径解析 -->
+        <section class="mb-16 md:mb-24 motion-block">
+            <div data-motion-initial='{ "opacity": 0, "y": 50 }' data-motion-whileInView='{ "opacity": 1, "y": 0 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.2 }'>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-8 text-center" data-translate="section4_title">四、電商終局與零售三種路徑解析</h2>
+                <p class="text-base md:text-lg text-justify-custom mb-6 text-text-dim" data-translate="section4_p1">零售發展進入「電商+線下融合」階段，具體趨勢分為三類：</p>
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                     <div class="bento-item cyber-glow-border-cyan bg-gradient-cyber-magenta">
+                        <h4 class="text-lg font-semibold mb-2 flex items-center text-highlight-cyan" data-translate="section4_item1_title"><i class="fas fa-box-open fa-fw mr-2 line-art-icon text-sm"></i>延時零售 (Deferred Retail)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section4_item1_desc">傳統電商模式，消費者下單後2–3天送達。代表如天貓超市、京東商城。</p>
+                    </div>
+                    <div class="bento-item cyber-glow-border-magenta bg-gradient-cyber-magenta">
+                        <h4 class="text-lg font-semibold mb-2 flex items-center text-highlight-magenta" data-translate="section4_item2_title"><i class="fas fa-shipping-fast fa-fw mr-2 line-art-icon text-sm"></i>即時零售 (On-Demand Retail)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section4_item2_desc">透過外送物流體系（如美團、京東到家）實現「小時級送達」。以「臨時缺貨即時補給」為價值主張。</p>
+                    </div>
+                     <div class="bento-item cyber-glow-border-lime bg-gradient-cyber-magenta">
+                        <h4 class="text-lg font-semibold mb-2 flex items-center text-highlight-lime" data-translate="section4_item3_title"><i class="fas fa-store-alt fa-fw mr-2 line-art-icon text-sm"></i>全域融合零售 (Omni-channel Retail)</h4>
+                        <p class="text-sm text-justify-custom text-text-dim" data-translate="section4_item3_desc">線上線下打通，門市即倉庫、線上即導購。如盒馬鮮生、山姆會員店，結合會員制+體驗+配送。</p>
+                    </div>
+                </div>
+                 <div class="bento-item cyber-glow-border p-4 md:p-6">
+                    <h4 class="text-xl font-semibold mb-4 text-center text-highlight-cyan" data-translate="section4_chart1_title">零售路徑佔比趨勢預測 (當前 vs 2025)</h4>
+                    <div class="chart-container" style="height: 350px;"><canvas id="retailTrendsChart"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section V: 新商業時代：「上下左右」戰略具象圖解 -->
+        <section class="mb-16 md:mb-24 motion-block">
+            <div data-motion-initial='{ "opacity": 0, "scale": 0.9 }' data-motion-whileInView='{ "opacity": 1, "scale": 1 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.3 }'>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-2 text-center" data-translate="section5_title">五、新商業時代</h2>
+                <h3 class="text-xl md:text-2xl font-medium mb-8 text-highlight-magenta text-center" data-translate="section5_subtitle">「上下左右」戰略具象圖解</h3>
+                <p class="text-base md:text-lg text-justify-custom mb-6 text-text-dim" data-translate="section5_p1">在數智商業時代，企業應佈局四個關鍵方向：</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div class="bento-item cyber-glow-border-lime p-6 motion-block">
+                         <div data-motion-initial='{ "opacity": 0, "x": -30 }' data-motion-whileInView='{ "opacity": 1, "x": 0 }' data-motion-transition='{ "duration": 0.5, "delay": 0.2, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-lime" data-translate="section5_item1_title"><i class="fas fa-arrow-up fa-fw mr-2 line-art-icon"></i>向上：產業鏈整合 (資源端)</h4>
+                            <p class="text-sm text-justify-custom text-text-dim" data-translate="section5_item1_desc">掌握原料、製造、產地。如茶品牌「普洱茶雲南基地」透過產地直控保品質。</p>
+                        </div>
+                    </div>
+                    <div class="bento-item cyber-glow-border-lime p-6 motion-block">
+                         <div data-motion-initial='{ "opacity": 0, "x": 30 }' data-motion-whileInView='{ "opacity": 1, "x": 0 }' data-motion-transition='{ "duration": 0.5, "delay": 0.3, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-lime" data-translate="section5_item2_title"><i class="fas fa-arrow-down fa-fw mr-2 line-art-icon"></i>向下：用戶連結 (銷售端)</h4>
+                            <p class="text-sm text-justify-custom text-text-dim" data-translate="section5_item2_desc">直達消費者、建立用戶關係。如華為手機透過鴻蒙系統實現生態閉環。</p>
+                        </div>
+                    </div>
+                    <div class="bento-item cyber-glow-border-yellow p-6 motion-block">
+                        <div data-motion-initial='{ "opacity": 0, "x": -30 }' data-motion-whileInView='{ "opacity": 1, "x": 0 }' data-motion-transition='{ "duration": 0.5, "delay": 0.4, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-yellow" data-translate="section5_item3_title"><i class="fas fa-arrow-left fa-fw mr-2 line-art-icon"></i>向左：內容/IP/直播</h4>
+                            <p class="text-sm text-justify-custom text-text-dim" data-translate="section5_item3_desc">透過短影片、IP與社交渠道拓寬品牌心智。如「童穿」童裝品牌透過抖音直播帶貨實現品效合一。</p>
+                        </div>
+                    </div>
+                    <div class="bento-item cyber-glow-border-yellow p-6 motion-block">
+                        <div data-motion-initial='{ "opacity": 0, "x": 30 }' data-motion-whileInView='{ "opacity": 1, "x": 0 }' data-motion-transition='{ "duration": 0.5, "delay": 0.5, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-yellow" data-translate="section5_item4_title"><i class="fas fa-arrow-right fa-fw mr-2 line-art-icon"></i>向右：AI/算法/系統</h4>
+                            <p class="text-sm text-justify-custom text-text-dim" data-translate="section5_item4_desc">借助AI、大數據進行精準行銷、庫存預測。如美團、美妝品牌完美日記的用戶畫像推薦系統。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section VI: 未來趨勢：個體崛起與企業轉型機會 -->
+        <section class="mb-16 md:mb-24 motion-block">
+            <div data-motion-initial='{ "opacity": 0, "y": 50 }' data-motion-whileInView='{ "opacity": 1, "y": 0 }' data-motion-transition='{ "duration": 0.7, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.2 }'>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-8 text-center" data-translate="section6_title">六、未來趨勢：個體崛起與企業轉型機會</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-12">
+                    <div class="bento-item cyber-glow-border-magenta p-6 motion-block">
+                        <div data-motion-initial='{ "opacity": 0, "y": 30 }' data-motion-whileInView='{ "opacity": 1, "y": 0 }' data-motion-transition='{ "duration": 0.5, "delay": 0.2, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-magenta" data-translate="section6_item1_title"><i class="fas fa-user-astronaut fa-fw mr-3 line-art-icon"></i>對個體的變化</h4>
+                            <ul class="list-disc list-inside space-y-2 text-sm text-text-dim text-justify-custom">
+                                <li data-translate="section6_item1_li1"><strong class="text-text-light">身份重構：</strong>每個人都可能是品牌——內容創作者、KOC、直播主的興起讓個體具備「流量入口」能力。</li>
+                                <li data-translate="section6_item1_li2"><strong class="text-text-light">技能轉型：</strong>需掌握剪輯、社交、電商營運、AI輔助等複合技能。</li>
+                                <li data-translate="section6_item1_li3"><strong class="text-text-light">收入來源多元化：</strong>透過聯盟分佣、電商推薦、數位藏品等實現收入。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bento-item cyber-glow-border-magenta p-6 motion-block">
+                        <div data-motion-initial='{ "opacity": 0, "y": 30 }' data-motion-whileInView='{ "opacity": 1, "y": 0 }' data-motion-transition='{ "duration": 0.5, "delay": 0.4, "ease": "easeOut" }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                            <h4 class="text-xl font-semibold mb-3 flex items-center text-highlight-magenta" data-translate="section6_item2_title"><i class="fas fa-building-shield fa-fw mr-3 line-art-icon"></i>對企業的路徑</h4>
+                            <ul class="list-disc list-inside space-y-2 text-sm text-text-dim text-justify-custom">
+                                <li data-translate="section6_item2_li1"><strong class="text-text-light">人設即品牌：</strong>建構創始人IP或員工代表形象（如鐘薛高創始人林盛）。</li>
+                                <li data-translate="section6_item2_li2"><strong class="text-text-light">私域為核心：</strong>從流量購買轉向建立微信社群、會員體系維護老客。</li>
+                                <li data-translate="section6_item2_li3"><strong class="text-text-light">AI即效率：</strong>在客服、推薦、選品、定價等環節全面引入智能決策系統。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-item cyber-glow-border p-6">
+                    <h4 class="text-xl font-semibold mb-6 text-center text-highlight-cyan" data-translate="section6_chart1_title">企業營運模式趨勢演變</h4>
+                    <div class="space-y-6">
+                        <div class="p-4 rounded-md bg-gradient-cyber-blue cyber-glow-border-cyan">
+                            <p class="text-lg font-medium text-text-light mb-1 text-center" data-translate="section6_chart1_label1">傳統企業</p>
+                            <div class="flex flex-col md:flex-row items-center justify-center md:space-x-4">
+                                <span class="text-md text-text-dim" data-translate="section6_chart1_text1a">品牌主導</span>
+                                <i class="fas fa-long-arrow-alt-right text-xl text-neon-cyan my-2 md:my-0 transform md:rotate-0 rotate-90"></i>
+                                <span class="text-md text-text-dim" data-translate="section6_chart1_text1b">廣告投放</span>
+                            </div>
+                        </div>
+                        <div class="text-center my-4">
+                             <i class="fas fa-arrow-down text-3xl text-neon-yellow"></i>
+                        </div>
+                        <div class="p-4 rounded-md bg-gradient-cyber-blue cyber-glow-border-magenta">
+                             <p class="text-lg font-medium text-highlight-magenta mb-1 text-center" data-translate="section6_chart1_label2">未來企業</p>
+                            <div class="flex flex-col md:flex-row items-center justify-center md:space-x-2">
+                                <span class="text-md text-text-dim" data-translate="section6_chart1_text2a">個體主導</span>
+                                <i class="fas fa-plus text-md text-neon-magenta mx-1 my-2 md:my-0"></i>
+                                <span class="text-md text-text-dim" data-translate="section6_chart1_text2b">社群營運</span>
+                                <i class="fas fa-plus text-md text-neon-magenta mx-1 my-2 md:my-0"></i>
+                                <span class="text-md text-text-dim" data-translate="section6_chart1_text2c">AI增長</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 mt-12 border-t border-neon-cyan-dim motion-block">
+            <div data-motion-initial='{ "opacity": 0 }' data-motion-whileInView='{ "opacity": 1 }' data-motion-transition='{ "duration": 1, "delay": 0.5 }' data-motion-viewport='{ "once": true, "amount": 0.5 }'>
+                <p class="text-sm text-text-dim" data-translate="footer_copyright">&copy; 2025 一本正經胡說八道全解析. 版權所有.</p>
+                <p class="text-xs text-text-dim mt-1" data-translate="footer_inspiration">設計靈感源自每天上網刷手機.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animation and Chart.js scripts remain the same
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const initial = JSON.parse(element.dataset.motionInitial.replace(/'/g, '"'));
+                        const whileInView = JSON.parse(element.dataset.motionWhileinview.replace(/'/g, '"'));
+                        const transition = JSON.parse(element.dataset.motionTransition.replace(/'/g, '"'));
+                        element.style.transition = `all ${transition.duration || 0.5}s ${transition.ease || 'ease-out'} ${transition.delay || 0}s`;
+                        requestAnimationFrame(() => {
+                            let newTransform = "";
+                            Object.keys(whileInView).forEach(key => {
+                                if (key === 'opacity') element.style.opacity = whileInView[key];
+                                else { if (key === 'y') newTransform += `translateY(${whileInView[key]}px) `; else if (key === 'x') newTransform += `translateX(${whileInView[key]}px) `; else if (key === 'scale') newTransform += `scale(${whileInView[key]}) `; }
+                            });
+                            element.style.transform = newTransform.trim();
+                        });
+                        if (JSON.parse(element.dataset.motionViewport.replace(/'/g, '"')).once) { observer.unobserve(element); }
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('[data-motion-initial]').forEach(el => {
+                const initial = JSON.parse(el.dataset.motionInitial.replace(/'/g, '"'));
+                let initialTransform = "";
+                Object.keys(initial).forEach(key => {
+                    if (key === 'opacity') el.style.opacity = initial[key];
+                    else { if(key === 'y') initialTransform += ` translateY(${initial[key]}px)`; if(key === 'x') initialTransform += ` translateX(${initial[key]}px)`; if(key === 'scale') initialTransform += ` scale(${initial[key]})`; }
+                });
+                el.style.transform = initialTransform.trim();
+                observer.observe(el);
+            });
+            Chart.defaults.borderColor = `rgba(${neonCyanRGB}, 0.2)`; Chart.defaults.color = `rgba(${textLightRGB}, 0.8)`; Chart.defaults.font.family = "'Rajdhani', sans-serif"; Chart.defaults.plugins.legend.labels.boxWidth = 15; Chart.defaults.plugins.legend.labels.padding = 15;
+            
+            const douyinGMVCtx = document.getElementById('douyinGMVChart')?.getContext('2d');
+            if (douyinGMVCtx) { /* Douyin GMV Chart Init */ 
+                new Chart(douyinGMVCtx, { type: 'bar', data: { labels: ['2020', '2023', '2024 (預估)'], datasets: [{ label: '抖音電商GMV (萬億元)', data: [0.05, 2.65, 3.4], backgroundColor: `rgba(${neonMagentaRGB}, 0.7)`, borderColor: `rgb(${neonMagentaRGB})`, borderWidth: 1, borderRadius: 3, barThickness: 'flex', maxBarThickness: 30 }] }, options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1000, easing: 'easeInOutQuart' }, scales: { y: { beginAtZero: true, grid: { color: `rgba(${neonMagentaRGB}, 0.1)` }, ticks: { color: `rgba(${textLightRGB}, 0.7)`, font: {size: 10} } }, x: { grid: { display: false }, ticks: { color: `rgba(${textLightRGB}, 0.7)`, font: {size: 10} } } }, plugins: { legend: { display: true, position: 'bottom', labels: { color: `rgba(${textLightRGB}, 0.9)`, font: {size: 10} } }, tooltip: { backgroundColor: `rgba(${bgDarkRGB}, 0.9)`, titleColor: `rgb(${neonMagentaRGB})`, bodyColor: `rgb(${textLightRGB})`, borderColor: `rgba(${neonMagentaRGB}, 0.5)`, borderWidth: 1 } } } });
+            }
+            
+            let financialChartInstance = null; // To store and update chart instance
+            const financialCtx = document.getElementById('financialComparisonChart')?.getContext('2d');
+            function createFinancialChart(lang) {
+                if (financialChartInstance) { financialChartInstance.destroy(); }
+                if (financialCtx) { 
+                    financialChartInstance = new Chart(financialCtx, { type: 'line', data: { labels: ['2013', '2018', '2022', '2023 (預估)'], datasets: [ { label: translations[lang].chart_financial_ds1_label, data: [5.2, 56.1, 126.0, 138.0], borderColor: `rgb(${neonYellowRGB})`, backgroundColor: `rgba(${neonYellowRGB}, 0.1)`, tension: 0.3, borderWidth: 2, pointBackgroundColor: `rgb(${neonYellowRGB})`, pointRadius: 4, fill: true, }, { label: translations[lang].chart_financial_ds2_label, data: [9.8, 47.2, 82.0, 85.0], borderColor: `rgb(${neonLimeRGB})`, backgroundColor: `rgba(${neonLimeRGB}, 0.1)`, tension: 0.3, borderWidth: 2, pointBackgroundColor: `rgb(${neonLimeRGB})`, pointRadius: 4, fill: true, }, { label: translations[lang].chart_financial_ds3_label, data: [0.2, 12.0, 80.0, 95.0], borderColor: `rgb(${neonCyanRGB})`, backgroundColor: `rgba(${neonCyanRGB}, 0.1)`, tension: 0.3, borderWidth: 2, pointBackgroundColor: `rgb(${neonCyanRGB})`, pointRadius: 4, fill: true, } ] }, options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1200, easing: 'easeInOutQuart', delay: 100 }, scales: { y: { beginAtZero: true, grid: { color: `rgba(${neonCyanRGB}, 0.1)` }, ticks: { color: `rgba(${textLightRGB}, 0.7)`, callback: function(value) { return '$' + value + (lang === 'en' ? 'B' : '十億'); } } }, x: { grid: { display: false }, ticks: { color: `rgba(${textLightRGB}, 0.7)` } } }, plugins: { legend: { position: 'top', labels: { color: `rgba(${textLightRGB}, 0.9)` } }, tooltip: { backgroundColor: `rgba(${bgDarkRGB}, 0.95)`, titleColor: `rgb(${neonCyanRGB})`, bodyColor: `rgb(${textLightRGB})`, borderColor: `rgba(${neonCyanRGB}, 0.5)`, borderWidth: 1, mode: 'index', intersect: false, callbacks: { label: function(context) { let label = context.dataset.label || ''; if (label) { label += ': '; } if (context.parsed.y !== null) { label += '$' + context.parsed.y + (lang === 'en' ? ' Billion' : ' 十億'); } return label; } } } }, interaction: { mode: 'index', intersect: false, }, } });
+                }
+            }
+            
+            let retailTrendsChartInstance = null;
+            const retailCtx = document.getElementById('retailTrendsChart')?.getContext('2d');
+            function createRetailTrendsChart(lang) {
+                if (retailTrendsChartInstance) { retailTrendsChartInstance.destroy(); }
+                if (retailCtx) {
+                    retailTrendsChartInstance = new Chart(retailCtx, { type: 'bar', data: { labels: [translations[lang].chart_retail_label1, translations[lang].chart_retail_label2, translations[lang].chart_retail_label3], datasets: [ { label: translations[lang].chart_retail_ds1_label, data: [70, 10, 20], backgroundColor: `rgba(${neonCyanRGB}, 0.7)`, borderColor: `rgb(${neonCyanRGB})`, borderWidth: 1, borderRadius: 4, barThickness: 'flex', maxBarThickness: 50 }, { label: translations[lang].chart_retail_ds2_label, data: [30, 40, 30], backgroundColor: `rgba(${neonMagentaRGB}, 0.7)`, borderColor: `rgb(${neonMagentaRGB})`, borderWidth: 1, borderRadius: 4, barThickness: 'flex', maxBarThickness: 50 } ] }, options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1200, easing: 'easeInOutQuart', delay: 200 }, scales: { y: { beginAtZero: true, max: 100, grid: { color: `rgba(${neonCyanRGB}, 0.1)` }, ticks: { color: `rgba(${textLightRGB}, 0.7)` } }, x: { grid: { display: false }, ticks: { color: `rgba(${textLightRGB}, 0.7)` } } }, plugins: { legend: { position: 'top', labels: { color: `rgba(${textLightRGB}, 0.9)` } }, tooltip: { backgroundColor: `rgba(${bgDarkRGB}, 0.9)`, titleColor: `rgb(${neonCyanRGB})`, bodyColor: `rgb(${textLightRGB})`, borderColor: `rgba(${neonCyanRGB}, 0.5)`, borderWidth: 1, mode: 'index', intersect: false } }, interaction: { mode: 'index', intersect: false, }, } });
+                }
+            }
+
+
+            // Language Switching Logic
+            const translations = {
+                zh: {
+                    // Header
+                    pageTitle: "中國互聯網戰略格局全解析",
+                    pageSubtitle: "三把劍與商業演進：賽博視角",
+                    // Section 1
+                    section1_title: "一、何謂「三把劍」？",
+                    section1_subtitle: "字節跳動創始人張一鳴的全局思維",
+                    section1_p1: "在中國互聯網產業中，「內容、社交、電商」被稱為影響流量和變現能力的三把戰略之劍。掌握這三劍的能力，決定了企業是否能持續成長並在賽道中佔據主導地位。字節跳動創始人兼前CEO張一鳴（技術出身，擅長算法與產品戰略）正是這一戰略最具代表性的實踐者。他透過佈局今日頭條、抖音、興趣電商，全面建構內容、社交與交易閉環。",
+                    section1_sword1_title: "內容劍：流量之源",
+                    section1_sword1_p1: "今日頭條於2012年上線，以算法分發為核心。2017年，抖音迅速席捲全國。抖音的日活躍用戶從2018年的2億增長至2023年的超過8億。廣告收入亦從2016年的約80億元增長至2023年的逾3000億元。",
+                    section1_sword1_stat1_label: "抖音日活躍用戶 (DAU)",
+                    section1_sword1_stat1_year1: "(2018)",
+                    section1_sword1_stat1_year2: "(2023)",
+                    section1_sword1_stat2_label: "廣告收入 (人民幣)",
+                    section1_sword1_stat2_year1: "(2016)",
+                    section1_sword1_stat2_year2: "(2023)",
+                    section1_sword2_title: "社交劍：挑戰騰訊帝國",
+                    section1_sword2_p1: "儘管字節跳動旗下「多閃」、「飛聊」社交產品未能成功挑戰微信，但抖音透過多種方式嵌入社交功能。微信（月活12.6億）仍然主導市場，但抖音日均互動量在年輕用戶群體中佔比持續上升。",
+                    section1_sword2_stat1_label: "微信月活躍用戶 (MAU)",
+                    section1_sword2_stat2_label: "抖音日均互動量 (年輕用戶)",
+                    section1_sword2_stat2_value: "持續上升 <i class='fas fa-arrow-trend-up ml-2'></i>",
+                    section1_sword3_title: "電商劍：打造內容到交易閉環",
+                    section1_sword3_p1: "字節跳動於2020年正式推出「興趣電商」戰略，透過達人直播（如羅永浩）與品牌自播（如雷軍）推動轉化。抖音電商GMV（成交總額）增長迅猛。",
+                    // Section 2
+                    section2_title: "二、傳統三巨頭的反擊與十年財務對比",
+                    section2_p1: "面對張一鳴的三劍佈局，中國傳統三大科技企業也紛紛調整策略、重構護城河。關鍵人物包括阿里巴巴創始人馬雲、騰訊創始人馬化騰、字節跳動創始人張一鳴。",
+                    table1_col1: "公司",
+                    table1_col2: "核心強項",
+                    table1_col3: "短板",
+                    table1_col4: "戰略應對",
+                    table1_r1c2: "電商體系完整",
+                    table1_r1c3: "年輕用戶流失，內容生態薄弱",
+                    table1_r1c4: "加強淘寶直播、建構AI種草閉環",
+                    table1_r2c2: "社交基因強大",
+                    table1_r2c3: "電商鏈條斷裂，缺乏交易場景",
+                    table1_r2c4: "推動微信小商店＋影片號內容電商",
+                    table1_r3c2: "內容驅動流量，算法投放精準",
+                    table1_r3c3: "社交工具生態尚未形成閉環",
+                    table1_r3c4: "持續拓展社交與SaaS服務體系（如飛書）",
+                    section2_subtitle_financial: "財務對比（2013–2023）摘要",
+                    table2_col1: "年度",
+                    table2_col2: "阿里巴巴收入",
+                    table2_col3: "騰訊收入",
+                    table2_col4: "字節跳動收入",
+                    table2_col5: "字節跳動是否盈利",
+                    table2_r1c5_profit: "否",
+                    table2_r2c5_profit: "否",
+                    table2_r3c5_profit: "是 (利潤超騰訊)",
+                    table2_r4c5_profit: "是",
+                    section2_p2_financial_summary: "字節跳動2022年首次實現大規模盈利（淨利潤172億美元），盈利能力強勁增長。",
+                    section2_chart1_title: "三巨頭收入對比圖 (2013-2023, 單位: 十億美元)",
+                    chart_financial_ds1_label: "阿里巴巴收入",
+                    chart_financial_ds2_label: "騰訊收入",
+                    chart_financial_ds3_label: "字節跳動收入",
+                     // Section 3
+                    section3_title: "三、電商模式變遷：從1.0到6.0",
+                    section3_p1: "中國電商過去十年從平台購物走向內容驅動與社交推薦，模式演進如下：",
+                    section3_item1_title: "電商1.0 (貨架電商)",
+                    section3_item1_desc: "用戶主動搜索商品，以SKU為核心，代表如淘寶初期階段。",
+                    section3_item2_title: "電商2.0 (平台電商)",
+                    section3_item2_desc: "商家入駐平台，形成「店中店」，如京東早期模式。",
+                    section3_item3_title: "電商3.0 (移動電商)",
+                    section3_item3_desc: "手機購物成為主流，App生態爆發。",
+                    section3_item4_title: "電商4.0 (拼購電商)",
+                    section3_item4_desc: "以拼多多為代表，依靠社交拼團模式主打「低價」與「爆款」。",
+                    section3_item5_title: "電商5.0 (興趣電商)",
+                    section3_item5_desc: "內容驅動消費，如抖音影片引導購買，強調「逛」的體驗。",
+                    section3_item6_title: "電商6.0 (人情電商)",
+                    section3_item6_desc: "強調熟人推薦、私域流量，微信「送禮」、「社群買手」構成典型案例。",
+                    // Section 4
+                    section4_title: "四、電商終局與零售三種路徑解析",
+                    section4_p1: "零售發展進入「電商+線下融合」階段，具體趨勢分為三類：",
+                    section4_item1_title: "延時零售 (Deferred Retail)",
+                    section4_item1_desc: "傳統電商模式，消費者下單後2–3天送達。代表如天貓超市、京東商城。",
+                    section4_item2_title: "即時零售 (On-Demand Retail)",
+                    section4_item2_desc: "透過外送物流體系（如美團、京東到家）實現「小時級送達」。以「臨時缺貨即時補給」為價值主張。",
+                    section4_item3_title: "全域融合零售 (Omni-channel Retail)",
+                    section4_item3_desc: "線上線下打通，門市即倉庫、線上即導購。如盒馬鮮生、山姆會員店，結合會員制+體驗+配送。",
+                    section4_chart1_title: "零售路徑佔比趨勢預測 (當前 vs 2025)",
+                    chart_retail_label1: "延時零售",
+                    chart_retail_label2: "即時零售",
+                    chart_retail_label3: "全域融合零售",
+                    chart_retail_ds1_label: "當前佔比 (%)",
+                    chart_retail_ds2_label: "2025預測佔比 (%)",
+                    // Section 5
+                    section5_title: "五、新商業時代",
+                    section5_subtitle: "「上下左右」戰略具象圖解",
+                    section5_p1: "在數智商業時代，企業應佈局四個關鍵方向：",
+                    section5_item1_title: "向上：產業鏈整合 (資源端)",
+                    section5_item1_desc: "掌握原料、製造、產地。如茶品牌「普洱茶雲南基地」透過產地直控保品質。",
+                    section5_item2_title: "向下：用戶連結 (銷售端)",
+                    section5_item2_desc: "直達消費者、建立用戶關係。如華為手機透過鴻蒙系統實現生態閉環。",
+                    section5_item3_title: "向左：內容/IP/直播",
+                    section5_item3_desc: "透過短影片、IP與社交渠道拓寬品牌心智。如「童穿」童裝品牌透過抖音直播帶貨實現品效合一。",
+                    section5_item4_title: "向右：AI/算法/系統",
+                    section5_item4_desc: "借助AI、大數據進行精準行銷、庫存預測。如美團、美妝品牌完美日記的用戶畫像推薦系統。",
+                    // Section 6
+                    section6_title: "六、未來趨勢：個體崛起與企業轉型機會",
+                    section6_item1_title: "對個體的變化",
+                    section6_item1_li1: "<strong class='text-text-light'>身份重構：</strong>每個人都可能是品牌——內容創作者、KOC、直播主的興起讓個體具備「流量入口」能力。",
+                    section6_item1_li2: "<strong class='text-text-light'>技能轉型：</strong>需掌握剪輯、社交、電商營運、AI輔助等複合技能。",
+                    section6_item1_li3: "<strong class='text-text-light'>收入來源多元化：</strong>透過聯盟分佣、電商推薦、數位藏品等實現收入。",
+                    section6_item2_title: "對企業的路徑",
+                    section6_item2_li1: "<strong class='text-text-light'>人設即品牌：</strong>建構創始人IP或員工代表形象（如鐘薛高創始人林盛）。",
+                    section6_item2_li2: "<strong class='text-text-light'>私域為核心：</strong>從流量購買轉向建立微信社群、會員體系維護老客。",
+                    section6_item2_li3: "<strong class='text-text-light'>AI即效率：</strong>在客服、推薦、選品、定價等環節全面引入智能決策系統。",
+                    section6_chart1_title: "企業營運模式趨勢演變",
+                    section6_chart1_label1: "傳統企業",
+                    section6_chart1_text1a: "品牌主導",
+                    section6_chart1_text1b: "廣告投放",
+                    section6_chart1_label2: "未來企業",
+                    section6_chart1_text2a: "個體主導",
+                    section6_chart1_text2b: "社群營運",
+                    section6_chart1_text2c: "AI增長",
+                    // Footer
+                    footer_copyright: "&copy; 2025 一本正經胡說八道全解析. 版權所有.",
+                    footer_inspiration: "設計靈感源自每天上網刷手機."
+                },
+                en: { // English translations (Partial examples, needs full translation)
+                    // Header
+                    pageTitle: "China's Internet Strategy Landscape: A Deep Dive",
+                    pageSubtitle: "The Three Swords & Business Evolution: A Cyber Perspective",
+                    // Section 1
+                    section1_title: "I. What are the \"Three Swords\"?",
+                    section1_subtitle: "ByteDance Founder Zhang Yiming's Comprehensive Strategy",
+                    section1_p1: "In China's internet industry, \"Content, Social, E-commerce\" are known as the three strategic swords influencing traffic and monetization. Mastering these determines a company's sustained growth and dominance. ByteDance founder and former CEO Zhang Yiming (a tech expert skilled in algorithms and product strategy) is a prime practitioner. Through Toutiao, Douyin, and interest-based e-commerce, he built a comprehensive content, social, and transaction loop.",
+                    section1_sword1_title: "Content Sword: The Source of Traffic",
+                    section1_sword1_p1: "Toutiao launched in 2012 with algorithmic distribution at its core. In 2017, Douyin (TikTok's China version) rapidly swept the nation. Douyin's DAU grew from 200M in 2018 to over 800M in 2023. Ad revenue also surged from ~8B RMB in 2016 to over 300B RMB in 2023.",
+                    section1_sword1_stat1_label: "Douyin Daily Active Users (DAU)",
+                    section1_sword1_stat1_year1: "(2018)",
+                    section1_sword1_stat1_year2: "(2023)",
+                    section1_sword1_stat2_label: "Ad Revenue (RMB)",
+                    section1_sword1_stat2_year1: "(2016)",
+                    section1_sword1_stat2_year2: "(2023)",
+                    section1_sword2_title: "Social Sword: Challenging Tencent's Empire",
+                    section1_sword2_p1: "Although ByteDance's social apps \"Duoshan\" and \"Feiliao\" failed to challenge WeChat, Douyin embedded social features through various means. WeChat (1.26B MAU) still dominates, but Douyin's daily interactions among young users are rising, posing a diversion threat.",
+                    section1_sword2_stat1_label: "WeChat Monthly Active Users (MAU)",
+                    section1_sword2_stat2_label: "Douyin Daily Interactions (Young Users)",
+                    section1_sword2_stat2_value: "Steadily Rising <i class='fas fa-arrow-trend-up ml-2'></i>",
+                    section1_sword3_title: "E-commerce Sword: Content-to-Transaction Loop",
+                    section1_sword3_p1: "ByteDance officially launched its \"Interest E-commerce\" strategy in 2020, driving conversions through influencer live streams (e.g., Luo Yonghao) and brand self-broadcasts (e.g., Lei Jun). Douyin E-commerce GMV has grown rapidly.",
+                    // Section 2
+                    section2_title: "II. Incumbents' Counterattacks & Decade Financial Comparison",
+                    section2_p1: "Facing Zhang Yiming's three-sword strategy, China's traditional tech giants have adjusted strategies and rebuilt moats. Key figures include Alibaba's Jack Ma, Tencent's Pony Ma, and ByteDance's Zhang Yiming.",
+                    table1_col1: "Company",
+                    table1_col2: "Core Strength",
+                    table1_col3: "Weakness",
+                    table1_col4: "Strategic Response",
+                    table1_r1c2: "Complete E-commerce Ecosystem",
+                    table1_r1c3: "Losing Young Users, Weak Content",
+                    table1_r1c4: "Boost Taobao Live, AI Seeding Loop",
+                    table1_r2c2: "Strong Social DNA",
+                    table1_r2c3: "Broken E-commerce Chain, Lacks Scenes",
+                    table1_r2c4: "Push WeChat Mini Stores + Video Account E-commerce",
+                    table1_r3c2: "Content-Driven Traffic, Precise Algo Ads",
+                    table1_r3c3: "Social Tool Ecosystem Incomplete",
+                    table1_r3c4: "Expand Social & SaaS (e.g., Feishu)",
+                    section2_subtitle_financial: "Financial Comparison (2013–2023) Summary",
+                    table2_col1: "Year",
+                    table2_col2: "Alibaba Revenue",
+                    table2_col3: "Tencent Revenue",
+                    table2_col4: "ByteDance Revenue",
+                    table2_col5: "ByteDance Profitable?",
+                    table2_r1c5_profit: "No",
+                    table2_r2c5_profit: "No",
+                    table2_r3c5_profit: "Yes (Profit > Tencent)",
+                    table2_r4c5_profit: "Yes",
+                    section2_p2_financial_summary: "ByteDance achieved large-scale profitability for the first time in 2022 (net profit $17.2B), showing strong earnings growth.",
+                    section2_chart1_title: "Big Three Revenue Comparison (2013-2023, USD Billions)",
+                    chart_financial_ds1_label: "Alibaba Revenue",
+                    chart_financial_ds2_label: "Tencent Revenue",
+                    chart_financial_ds3_label: "ByteDance Revenue",
+                     // Section 3
+                    section3_title: "III. E-commerce Model Evolution: 1.0 to 6.0",
+                    section3_p1: "China's e-commerce has shifted from platform shopping to content-driven and social recommendations over the past decade:",
+                    section3_item1_title: "E-commerce 1.0 (Shelf-based)",
+                    section3_item1_desc: "Users actively search for products, SKU-centric. E.g., early Taobao.",
+                    section3_item2_title: "E-commerce 2.0 (Platform-based)",
+                    section3_item2_desc: "Merchants join platforms, creating 'stores within stores'. E.g., early JD.com.",
+                    section3_item3_title: "E-commerce 3.0 (Mobile)",
+                    section3_item3_desc: "Mobile shopping becomes mainstream, app ecosystem explodes.",
+                    section3_item4_title: "E-commerce 4.0 (Group Buying)",
+                    section3_item4_desc: "Represented by Pinduoduo, focusing on 'low price' & 'hot items' via social group buying.",
+                    section3_item5_title: "E-commerce 5.0 (Interest-based)",
+                    section3_item5_desc: "Content drives consumption, e.g., Douyin videos leading to purchases, emphasizing 'browsing'.",
+                    section3_item6_title: "E-commerce 6.0 (Relationship-based)",
+                    section3_item6_desc: "Emphasizes recommendations from acquaintances, private domain traffic. WeChat 'gifting' & 'community buyers' are typical.",
+                    // Section 4
+                    section4_title: "IV. E-commerce Endgame & Three Retail Paths",
+                    section4_p1: "Retail is entering an 'e-commerce + offline integration' phase, with three main trends:",
+                    section4_item1_title: "Deferred Retail",
+                    section4_item1_desc: "Traditional e-commerce, delivery in 2-3 days. E.g., Tmall Supermarket, JD.com.",
+                    section4_item2_title: "On-Demand Retail",
+                    section4_item2_desc: "'Hourly delivery' via food delivery logistics (e.g., Meituan, JD Daojia). Value prop: 'instant replenishment for out-of-stock'.",
+                    section4_item3_title: "Omni-channel Retail",
+                    section4_item3_desc: "Online-offline integration, stores as warehouses, online as guides. E.g., Hema, Sam's Club, combining membership + experience + delivery.",
+                    section4_chart1_title: "Retail Path Share Trend Forecast (Current vs 2025)",
+                    chart_retail_label1: "Deferred Retail",
+                    chart_retail_label2: "On-Demand Retail",
+                    chart_retail_label3: "Omni-channel Retail",
+                    chart_retail_ds1_label: "Current Share (%)",
+                    chart_retail_ds2_label: "2025 Forecast (%)",
+                    // Section 5
+                    section5_title: "V. New Business Era",
+                    section5_subtitle: "\"Up, Down, Left, Right\" Strategy Illustrated",
+                    section5_p1: "In the digital intelligence era, businesses should focus on four key directions:",
+                    section5_item1_title: "Upstream: Supply Chain Integration (Resource End)",
+                    section5_item1_desc: "Control raw materials, manufacturing, origin. E.g., 'Pu'er Tea Yunnan Base' ensures quality via direct origin control.",
+                    section5_item2_title: "Downstream: User Connection (Sales End)",
+                    section5_item2_desc: "Directly reach consumers, build user relationships. E.g., Huawei phones create an ecosystem loop via HarmonyOS.",
+                    section5_item3_title: "Left: Content/IP/Livestreaming",
+                    section5_item3_desc: "Expand brand awareness via short videos, IP, social channels. E.g., 'Tongchuan' kids' wear achieves brand-sales synergy via Douyin live streams.",
+                    section5_item4_title: "Right: AI/Algorithms/Systems",
+                    section5_item4_desc: "Use AI, big data for precise marketing, inventory forecasting. E.g., Meituan, Perfect Diary's user profiling recommendation systems.",
+                    // Section 6
+                    section6_title: "VI. Future Trends: Rise of Individuals & Corporate Transformation",
+                    section6_item1_title: "Changes for Individuals",
+                    section6_item1_li1: "<strong class='text-text-light'>Identity Reconstruction:</strong> Everyone can be a brand—creators, KOCs, livestreamers gain 'traffic gateway' abilities.",
+                    section6_item1_li2: "<strong class='text-text-light'>Skill Transformation:</strong> Need composite skills like editing, social, e-commerce ops, AI assistance.",
+                    section6_item1_li3: "<strong class='text-text-light'>Diversified Income:</strong> Earn via affiliate commissions, e-commerce referrals, digital collectibles, etc.",
+                    section6_item2_title: "Paths for Enterprises",
+                    section6_item2_li1: "<strong class='text-text-light'>Persona as Brand:</strong> Build founder IP or employee representative images (e.g., Chicecream's founder Lin Sheng).",
+                    section6_item2_li2: "<strong class='text-text-light'>Private Domain Core:</strong> Shift from buying traffic to building WeChat communities, membership systems for retention.",
+                    section6_item2_li3: "<strong class='text-text-light'>AI as Efficiency:</strong> Fully integrate intelligent decision systems in customer service, recommendations, product selection, pricing.",
+                    section6_chart1_title: "Evolution of Business Operation Models",
+                    section6_chart1_label1: "Traditional Enterprise",
+                    section6_chart1_text1a: "Brand-led",
+                    section6_chart1_text1b: "Ad Spending",
+                    section6_chart1_label2: "Future Enterprise",
+                    section6_chart1_text2a: "Individual-led",
+                    section6_chart1_text2b: "Community Ops",
+                    section6_chart1_text2c: "AI Growth",
+                    // Footer
+                    footer_copyright: "&copy; 2025 Seriously Talking Nonsense Analysis. All rights reserved.",
+                    footer_inspiration: "Inspired by daily phone scrolling."
+                }
+            };
+
+            const langToggleButton = document.getElementById('language-toggle');
+            let currentLang = localStorage.getItem('preferredLang') || 'zh';
+
+            function applyTranslations(lang) {
+                document.documentElement.lang = lang === 'zh' ? 'zh-Hant-CN' : 'en';
+                document.querySelectorAll('[data-translate]').forEach(element => {
+                    const key = element.dataset.translate;
+                    if (translations[lang] && translations[lang][key]) {
+                        // For elements that might contain HTML (like list items with <strong>)
+                        if (element.tagName === 'LI' || (translations[lang][key].includes('<strong') && element.innerHTML.includes('<strong'))) {
+                             element.innerHTML = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    }
+                });
+                langToggleButton.textContent = lang === 'zh' ? 'ENG' : '繁體';
+                langToggleButton.dataset.lang = lang;
+
+                // Update chart labels
+                createFinancialChart(lang);
+                createRetailTrendsChart(lang);
+                // Update other charts if they have translatable labels
+                // Example: douyinGMVChartInstance.data.datasets[0].label = translations[lang].chart_douyin_gmv_label; douyinGMVChartInstance.update();
+                const douyinChart = Chart.getChart("douyinGMVChart");
+                if (douyinChart) {
+                    douyinChart.data.datasets[0].label = lang === 'zh' ? '抖音電商GMV (萬億元)' : 'Douyin E-commerce GMV (Trillion RMB)';
+                    douyinChart.update();
+                }
+
+            }
+
+            langToggleButton.addEventListener('click', () => {
+                currentLang = currentLang === 'zh' ? 'en' : 'zh';
+                localStorage.setItem('preferredLang', currentLang);
+                applyTranslations(currentLang);
+            });
+
+            // Initial translation application
+            applyTranslations(currentLang);
+        });
+    </script>
+</body>
+</html>
